@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Рустам Сулейманов — Java / Backend Developer</title>
+  
+  <!-- Подключение шрифтов (Inter + JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: rgba(18, 21, 29, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-hover: rgba(255, 255, 255, 0.2);
+      --text-main: #f1f3f7;
+      --text-muted: #8b949e;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.18);
+      --tag-bg: rgba(255, 255, 255, 0.05);
+      --navbar-bg: rgba(13, 16, 23, 0.85);
+      --btn-primary-bg: #ffffff;
+      --btn-primary-text: #000000;
+      --toast-bg: #ffffff;
+      --toast-text: #000000;
+      --bg-grad-1: rgba(59, 130, 246, 0.08);
+      --bg-grad-2: rgba(139, 92, 246, 0.05);
+      --radius: 14px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(0, 0, 0, 0.08);
+      --card-border-hover: rgba(0, 0, 0, 0.18);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.12);
+      --tag-bg: rgba(0, 0, 0, 0.04);
+      --navbar-bg: rgba(255, 255, 255, 0.92);
+      --btn-primary-bg: #0f172a;
+      --btn-primary-text: #ffffff;
+      --toast-bg: #0f172a;
+      --toast-text: #ffffff;
+      --bg-grad-1: rgba(37, 99, 235, 0.07);
+      --bg-grad-2: rgba(147, 51, 234, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      padding: 0 1.25rem;
+      background-image: 
+        radial-gradient(circle at 50% 0%, var(--bg-grad-1), transparent 45%),
+        radial-gradient(circle at 100% 50%, var(--bg-grad-2), transparent 40%);
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5.5rem 0 4rem;
+    }
+
+    /* Навбар */
+    .navbar {
+      position: fixed;
+      top: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 2.5rem);
+      max-width: 860px;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      padding: 0.35rem 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.42rem 0.75rem;
+      border-radius: 999px;
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: var(--text-main);
+      background: var(--tag-bg);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      background: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      padding: 2px 4px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--card-border-hover);
+      color: var(--text-main);
+    }
+
+    .theme-toggle,
+    .nav-burger {
+      background: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      border-radius: 999px;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .theme-toggle:hover,
+    .nav-burger:hover {
+      border-color: var(--card-border-hover);
+      transform: scale(1.06);
+    }
+
+    .nav-burger {
+      display: none;
+    }
+
+    [data-theme="light"] .icon-moon { display: none; }
+    [data-theme="light"] .icon-sun { display: block; }
+    [data-theme="dark"] .icon-moon { display: block; }
+    [data-theme="dark"] .icon-sun { display: none; }
+
+    .nav-burger .icon-close { display: none; }
+    .nav-burger.open .icon-menu { display: none; }
+    .nav-burger.open .icon-close { display: block; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 4.5rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 0.8rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      z-index: 99;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .mobile-menu.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mobile-nav-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .mobile-nav-item:hover,
+    .mobile-nav-item:active {
+      color: var(--text-main);
+      background: var(--tag-bg);
+    }
+
+    /* Hero */
+    .hero {
+      margin-bottom: 5rem;
+      padding-top: 1rem;
+      scroll-margin-top: 5.5rem; /* Запас сверху для якорной навигации */
+    }
+
+    .hero-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-avatar-box {
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .hero-avatar {
+      width: 220px;
+      height: 280px;
+      border-radius: 20px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border: 1px solid var(--card-border-hover);
+      background: var(--card-bg);
+      box-shadow: 
+        0 20px 40px -15px rgba(0, 0, 0, 0.4),
+        0 0 0 1px var(--card-border);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-avatar-box::after {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 24px;
+      background: radial-gradient(circle at 50% 50%, var(--accent) 0%, transparent 70%);
+      opacity: 0.2;
+      z-index: -1;
+      filter: blur(18px);
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-avatar-box:hover .hero-avatar {
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 
+        0 28px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 25px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .hero-avatar-box:hover::after {
+      opacity: 0.35;
+    }
+
+    .avatar-zoom-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .hero-avatar-box:hover .avatar-zoom-badge {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hero h1 {
+      font-size: 2.65rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      min-height: 6.2rem;
+    }
+
+    .hero-lead {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin-bottom: 0;
+      font-weight: 400;
+      min-height: 5.6rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.7rem 1.4rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border: 1px solid var(--btn-primary-bg);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--tag-bg);
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Секции с отступом под фиксированный навбар */
+    section {
+      margin-bottom: 5rem;
+      scroll-margin-top: 5.5rem; /* Запас сверху для якорной навигации */
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: "";
+      height: 1px;
+      flex-grow: 1;
+      background: var(--card-border);
+    }
+
+    /* Карточка стека технологий */
+    .tech-stack-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 0.9rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .tech-item {
+      font-weight: 500;
+      color: var(--text-main);
+      transition: color 0.2s ease;
+    }
+
+    .tech-item:hover {
+      color: var(--accent);
+    }
+
+    .tech-bullet {
+      color: var(--accent);
+      user-select: none;
+      opacity: 0.7;
+      font-size: 0.75rem;
+    }
+
+    /* Сетка языков */
+    .languages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .language-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+    }
+
+    .language-card:hover {
+      border-color: var(--card-border-hover);
+    }
+
+    .language-name {
+      font-weight: 600;
+      color: var(--text-main);
+      font-size: 0.98rem;
+    }
+
+    .language-level {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      background: var(--tag-bg);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+
+    /* Таймлайн опыта */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .timeline-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1.6rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+    }
+
+    .timeline-item:hover {
+      border-color: var(--card-border-hover);
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .timeline-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .timeline-company {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .timeline-subinfo {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .timeline-period {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      width: 220px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .timeline-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-top: 0.3rem;
+    }
+
+    .timeline-desc ul {
+      margin-left: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .timeline-desc li {
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-stack {
+      margin-top: 0.7rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-top: 0.6rem;
+      border-top: 1px dashed var(--card-border);
+    }
+
+    .timeline-stack strong {
+      color: var(--text-main);
+    }
+
+    /* Футер */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 3rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      scroll-margin-top: 5.5rem; /* Запас сверху при переходе к контактам */
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, var(--accent-glow), var(--tag-bg));
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2.2rem;
+      text-align: center;
+    }
+
+    .contact-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+      min-height: 2.2rem;
+    }
+
+    .contact-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      min-height: 3rem;
+    }
+
+    .footer-actions {
+      display: inline-flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-btn-tg {
+      min-width: 195px;
+    }
+
+    .footer-btn-copy {
+      min-width: 185px;
+    }
+
+    .footer-btn-github {
+      min-width: 110px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Модальное окно просмотра фото */
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+      padding: 1.5rem;
+    }
+
+    .image-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .image-modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 20px;
+      display: block;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.15);
+      object-fit: contain;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, background 0.2s;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      transform: scale(1.1);
+      background: #f1f5f9;
+    }
+
+    /* Всплывающее уведомление (Toast) */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--toast-bg);
+      color: var(--toast-text);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Адаптив для мобильных экранов (<= 720px) */
+    @media (max-width: 720px) {
+      .hero-wrapper {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+        min-height: auto;
+      }
+
+      .hero-lead {
+        margin-left: auto;
+        margin-right: auto;
+        min-height: auto;
+      }
+
+      .hero-avatar {
+        width: 180px;
+        height: 230px;
+      }
+
+      .timeline-header {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .timeline-period {
+        text-align: left;
+        width: auto;
+      }
+
+      .navbar {
+        padding: 0.4rem 0.8rem;
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-burger {
+        display: inline-flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .mobile-menu:not(.active) {
+        pointer-events: none;
+      }
+
+      /* Стек на мобилках: pill-теги */
+      .tech-stack-card {
+        padding: 1rem;
+        gap: 0.45rem;
+        justify-content: center;
+      }
+
+      .tech-bullet {
+        display: none;
+      }
+
+      .tech-item {
+        background: var(--tag-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.78rem;
+        line-height: 1.3;
+        text-align: center;
+      }
+
+      /* Языки на мобилках */
+      .languages-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .language-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 1rem 1.2rem;
+      }
+
+      .language-level {
+        align-self: flex-start;
+        font-size: 0.8rem;
+        white-space: normal;
+        text-align: left;
+      }
+
+      .contact-card h2,
+      .contact-card p {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Навигация -->
+  <nav class="navbar">
+    <button type="button" class="nav-burger" id="nav-burger" aria-label="Открыть меню" onclick="toggleMobileMenu()">
+      <svg class="icon-menu" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" x2="20" y1="6" y2="6"/>
+        <line x1="4" x2="20" y1="12" y2="12"/>
+        <line x1="4" x2="20" y1="18" y2="18"/>
+      </svg>
+      <svg class="icon-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+      </svg>
+    </button>
+
+    <ul class="nav-links" id="desktop-nav-links"></ul>
+
+    <div class="nav-controls">
+      <div class="lang-switch">
+        <button type="button" class="lang-btn active" id="btn-ru" onclick="setLanguage('ru')">RU</button>
+        <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+      </div>
+
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+        <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Выпадающее меню для телефонов -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul class="mobile-menu-list" id="mobile-nav-links"></ul>
+  </div>
+
+  <div class="container">
+    <!-- Hero Секция -->
+    <header class="hero" id="about">
+      <div class="hero-wrapper">
+        <div class="hero-text">
+          <h1 id="hero-title"></h1>
+          <p class="hero-lead" id="hero-lead"></p>
+        </div>
+
+        <div class="hero-avatar-box" onclick="openImageModal()" id="hero-avatar-box">
+          <img src="avatar.jpg" alt="Avatar" class="hero-avatar" id="hero-avatar-img" />
+          <div class="avatar-zoom-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Стек технологий -->
+    <section id="skills">
+      <h2 class="section-title" id="skills-title"></h2>
+      <div class="tech-stack-card" id="skills-container"></div>
+    </section>
+
+    <!-- Знание языков -->
+    <section id="languages">
+      <h2 class="section-title" id="languages-title"></h2>
+      <div class="languages-grid" id="languages-container"></div>
+    </section>
+
+    <!-- Опыт разработки -->
+    <section id="experience">
+      <h2 class="section-title" id="experience-title"></h2>
+      <div class="timeline" id="timeline-container"></div>
+    </section>
+
+    <!-- Контакты и сотрудничество -->
+    <footer id="contact">
+      <div class="contact-card">
+        <h2 id="footer-contact-title"></h2>
+        <p id="footer-contact-desc"></p>
+        <div class="footer-actions">
+          <a href="#" target="_blank" rel="noreferrer" class="btn btn-primary footer-btn-tg" id="btn-telegram"></a>
+          <button class="btn btn-secondary footer-btn-copy" onclick="copyEmail()">
+            <span id="btn-footer-copy"></span>
+          </button>
+          <a href="#" target="_blank" rel="noreferrer" class="btn btn-secondary footer-btn-github" id="btn-github">
+            <span id="btn-footer-github">GitHub</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div id="footer-copyright"></div>
+        <div style="font-family: var(--font-mono); font-size: 0.78rem;" id="footer-subtext"></div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Модальное окно (Lightbox) -->
+  <div id="image-modal" class="image-modal" onclick="closeImageModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeImageModal()" aria-label="Закрыть">&times;</button>
+      <img src="avatar.jpg" alt="Avatar Preview" class="modal-img" id="modal-img-preview" />
+    </div>
+  </div>
+
+  <!-- Уведомление о копировании -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Подключение единого конфига -->
+  <script src="config.js"></script>
+
+  <!-- Логика рендеринга -->
+  <script>
+    let currentLang = localStorage.getItem('preferred-lang') || 'ru';
+    let currentTheme = localStorage.getItem('preferred-theme') || 'dark';
+
+    function renderPage(lang) {
+      const cfg = window.PORTFOLIO_CONFIG;
+      if (!cfg) {
+        console.error("Файл config.js не найден или не загружен!");
+        return;
+      }
+
+      // 1. Навигация
+      const navTexts = cfg.navbar[lang];
+      const navItems = [
+        { href: "#about", text: navTexts.about },
+        { href: "#skills", text: navTexts.skills },
+        { href: "#languages", text: navTexts.languages },
+        { href: "#experience", text: navTexts.experience },
+        { href: "#contact", text: navTexts.contact }
+      ];
+
+      document.getElementById('desktop-nav-links').innerHTML = navItems
+        .map(item => `<li><a href="${item.href}" class="nav-item">${item.text}</a></li>`)
+        .join('');
+
+      document.getElementById('mobile-nav-links').innerHTML = navItems
+        .map(item => `<li><a href="${item.href}" class="mobile-nav-item" onclick="closeMobileMenu()">${item.text}</a></li>`)
+        .join('');
+
+      // 2. Hero
+      const hero = cfg.hero[lang];
+      document.getElementById('hero-title').innerHTML = hero.title;
+      document.getElementById('hero-lead').innerHTML = hero.lead;
+
+      const avatarImg = document.getElementById('hero-avatar-img');
+      avatarImg.src = cfg.general.avatar;
+      avatarImg.alt = hero.avatarAlt;
+      document.getElementById('hero-avatar-box').title = hero.avatarTitle;
+      document.getElementById('modal-img-preview').src = cfg.general.avatar;
+      document.getElementById('modal-img-preview').alt = hero.avatarAlt;
+
+      // 3. Стек технологий
+      document.getElementById('skills-title').textContent = cfg.skillsSection.titles[lang];
+      const skillsContainer = document.getElementById('skills-container');
+      const skillsList = cfg.skillsSection.items;
+      skillsContainer.innerHTML = skillsList
+        .map((skill, idx) => {
+          const bullet = idx < skillsList.length - 1 ? '<span class="tech-bullet">•</span>' : '';
+          return `<span class="tech-item">${skill}</span>${bullet}`;
+        })
+        .join('');
+
+      // 4. Знание языков
+      document.getElementById('languages-title').textContent = cfg.languagesSection.titles[lang];
+      const langContainer = document.getElementById('languages-container');
+      langContainer.innerHTML = cfg.languagesSection.items
+        .map(item => `
+          <div class="language-card">
+            <span class="language-name">${item.name[lang]}</span>
+            <span class="language-level">${item.level[lang]}</span>
+          </div>
+        `)
+        .join('');
+
+      // 5. Опыт работы
+      document.getElementById('experience-title').textContent = cfg.experienceSection.titles[lang];
+      const timelineContainer = document.getElementById('timeline-container');
+      const prefix = cfg.experienceSection.stackPrefix[lang];
+      
+      timelineContainer.innerHTML = cfg.experienceSection.list
+        .map(item => {
+          const companyName = typeof item.company === 'object' ? item.company[lang] : item.company;
+          const bulletsHtml = item.bullets[lang].map(b => `<li>${b}</li>`).join('');
+          return `
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <div>
+                  <span class="timeline-role">${item.role[lang]}</span> 
+                  <span class="timeline-company">${companyName}</span>
+                  <div class="timeline-subinfo">${item.subinfo[lang]}</div>
+                </div>
+                <span class="timeline-period">${item.period[lang]}</span>
+              </div>
+              <div class="timeline-desc">
+                <ul>${bulletsHtml}</ul>
+              </div>
+              <div class="timeline-stack">
+                <strong>${prefix}</strong> ${item.stack}
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+
+      // 6. Футер и сотрудничество
+      const footer = cfg.footer[lang];
+      document.getElementById('footer-contact-title').textContent = footer.title;
+      document.getElementById('footer-contact-desc').textContent = footer.desc;
+      
+      const tgBtn = document.getElementById('btn-telegram');
+      tgBtn.textContent = footer.btnTelegram;
+      tgBtn.href = cfg.general.telegramUrl;
+
+      document.getElementById('btn-footer-copy').textContent = footer.btnCopy;
+
+      const ghBtn = document.getElementById('btn-github');
+      ghBtn.href = cfg.general.githubUrl;
+      document.getElementById('btn-footer-github').textContent = footer.btnGithub;
+
+      document.getElementById('footer-copyright').textContent = footer.copyright;
+      document.getElementById('footer-subtext').textContent = footer.subtext;
+
+      // Кнопки языков
+      document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('preferred-lang', lang);
+      renderPage(lang);
+    }
+
+    function toggleTheme() {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('preferred-theme', currentTheme);
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const burger = document.getElementById('nav-burger');
+      const isOpen = menu.classList.contains('active');
+      if (isOpen) {
+        closeMobileMenu();
+      } else {
+        menu.classList.add('active');
+        burger.classList.add('open');
+      }
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const burger = document.getElementById('nav-burger');
+      menu.classList.remove('active');
+      burger.classList.remove('open');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('mobile-menu');
+      const burger = document.getElementById('nav-burger');
+      if (!menu.contains(e.target) && !burger.contains(e.target) && menu.classList.contains('active')) {
+        closeMobileMenu();
+      }
+    });
+
+    function copyEmail() {
+      const cfg = window.PORTFOLIO_CONFIG;
+      if (!cfg) return;
+
+      navigator.clipboard.writeText(cfg.general.email).then(() => {
+        const toast = document.getElementById('toast');
+        toast.textContent = cfg.footer[currentLang].toast;
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2200);
+      }).catch(err => {
+        console.error('Ошибка копирования:', err);
+      });
+    }
+
+    function openImageModal() {
+      const modal = document.getElementById('image-modal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('image-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeImageModal();
+        closeMobileMenu();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPage(currentLang);
+    });
+  </script>
+</body>
+</html>
