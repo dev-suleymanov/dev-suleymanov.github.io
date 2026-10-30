@@ -95,16 +95,16 @@ window.PORTFOLIO_CONFIG = {
     list: [
       {
         company: {
-          ru: "@ LekiTech Holding B.V.",
-          en: "@ LekiTech Holding B.V."
+          ru: "LekiTech Holding B.V.",
+          en: "LekiTech Holding B.V."
         },
         role: {
           ru: "Java Developer",
           en: "Java Developer"
         },
         subinfo: {
-          ru: "Разработка интерактивной образовательной платформы",
-          en: "Development of an interactive educational platform"
+          ru: "Разработка интерактивной образовательной платформы:",
+          en: "Development of an interactive educational platform:"
         },
         period: {
           ru: "Апрель 2024 — Настоящее время",
@@ -112,40 +112,40 @@ window.PORTFOLIO_CONFIG = {
         },
         bullets: {
           ru: [
-            "Участвовал в декомпозиции монолита на микросервисы Spring Boot, что ускорило выпуск новых функций и снизило риски остановки всей системы.",
-            "Оптимизировал сложные запросы в PostgreSQL, что сократило время загрузки страниц и повысило удержание пользователей в пиковые нагрузки.",
+            "Участвовал в декомпозиции монолита на микросервисы Spring Boot, что ускорило выпуск новых функций и позволило команде развивать продукт без риска остановки всей системы.",
+            "Оптимизировал сложные запросы в PostgreSQL, что сократило время загрузки страниц и повысило удержание пользователей в периоды высокой активности.",
             "Внедрил кэширование в Redis, снизив нагрузку на базу данных и обеспечив стабильную работу платформы при росте числа пользователей.",
-            "Перевёл отправку уведомлений в асинхронную обработку через Kafka, что ускорило пользовательские операции и изолировало внешний функционал.",
-            "Повысил покрытие бизнес-логики тестами JUnit 5 / Mockito, сократив количество ошибок в продакшене и нагрузку на техподдержку.",
-            "Настроил CI/CD конвейеры, сократив цикл выпуска обновлений и автоматизировав доставку кода.",
-            "Деплоил сервисы в Kubernetes с использованием rolling update, обеспечив выпуск релизов без простоя системы (zero downtime).",
-            "Внедрил централизованный мониторинг и логирование (Prometheus, Grafana, Loki), сократив время реакции на инциденты."
+            "Перевёл отправку уведомлений в асинхронную обработку через Kafka, что ускорило выполнение пользовательских операций и уменьшило влияние внешних сервисов на основной функционал.",
+            "Повысил покрытие бизнес-логики тестами JUnit 5, что сократило количество ошибок в продакшене и снизило нагрузку на поддержку.",
+            "Настроил СI/CD, сократив цикл выпуска обновлений и позволив быстрее выводить изменения в продукт.",
+            "Участвовал в деплое сервисов в Kubernetes с использованием rolling update, что обеспечило выпуск обновлений без простоя и потери активности пользователей.",
+            "Внедрил централизованный мониторинг и логирование, что сократило время реакции на инциденты и повысило общую надёжность платформы."
           ],
           en: [
-            "Participated in monolithic decomposition into Spring Boot microservices, speeding up feature delivery and mitigating complete downtime risks.",
-            "Optimized complex PostgreSQL queries, cutting page load times and increasing user retention during peak load periods.",
-            "Implemented Redis caching, significantly reducing DB load and maintaining stability as the active user base expanded.",
-            "Shifted notifications to asynchronous processing via Apache Kafka, accelerating user actions and decoupling external service dependencies.",
-            "Increased business logic test coverage using JUnit 5 / Mockito, minimizing production incidents and support ticket volume.",
-            "Configured CI/CD pipelines, shortening release cycles and automating deployments.",
-            "Deployed services to Kubernetes using rolling updates, achieving seamless zero-downtime releases.",
-            "Implemented centralized logging and observability (Prometheus, Grafana, Loki), drastically reducing incident response times."
+            "Participated in the decomposition of a monolith into Spring Boot microservices, accelerating feature delivery and enabling the team to scale the product without downtime risks.",
+            "Optimized complex PostgreSQL queries, cutting page load times and boosting user retention during peak activity periods.",
+            "Implemented Redis caching, reducing database load and ensuring platform stability under user growth.",
+            "Migrated notification delivery to asynchronous Kafka processing, speeding up user operations and decoupling external service dependencies.",
+            "Increased business logic test coverage using JUnit 5, reducing production bugs and support workload.",
+            "Set up CI/CD pipelines, shortening release cycles and accelerating delivery to production.",
+            "Participated in Kubernetes deployments using rolling updates, ensuring zero-downtime releases and seamless user sessions.",
+            "Implemented centralized monitoring and logging, reducing incident response times and boosting overall platform reliability."
           ]
         },
-        stack: "Java, Spring Boot (MVC, Data, Security, Actuator), Hibernate, REST API, WebSockets, Kafka, PostgreSQL, Redis, Maven, JUnit 5, Mockito, Swagger, Docker, Kubernetes, Linux, Git, CI/CD, Prometheus, Grafana, Loki"
+        stack: "Java, Spring Boot (MVC, Data, Security, Actuator), Hibernate, REST API, WebSockets, Kafka, PostgreSQL, Redis, Maven, JUnit 5, Mockito, Swagger (OpenAPI), Postman, Docker, Kubernetes, Linux, Git, CI/CD (GitHub Actions, GitLab CI/CD), Prometheus, Grafana, Loki, Promtail"
       },
       {
         company: {
-          ru: "@ Коммерческий проект (NDA)",
-          en: "@ Commercial Project (NDA)"
+          ru: "Коммерческий проект (NDA)",
+          en: "Commercial Project (NDA)"
         },
         role: {
           ru: "Java Developer",
           en: "Java Developer"
         },
         subinfo: {
-          ru: "Разработка серверных модулей для многопользовательских систем",
-          en: "Development of server modules for multi-user high-load systems"
+          ru: "Разработка серверных модулей для многопользовательских систем:",
+          en: "Development of server modules for multi-user high-load systems:"
         },
         period: {
           ru: "Декабрь 2020 — Апрель 2024",
@@ -153,29 +153,31 @@ window.PORTFOLIO_CONFIG = {
         },
         bullets: {
           ru: [
-            "Спроектировал архитектуру хранения данных на MySQL для сети серверов, обеспечив стабильную работу под высокой нагрузкой.",
-            "Реализовал кэширование сессионных данных в памяти процесса, уменьшив задержки (latency) для пользователей в пиковые часы.",
-            "Настроил синхронизацию кэша с БД при сетевых сбоях, минимизировав критические потери состояния.",
-            "Разработал библиотеку переиспользуемых модулей и разделил ответственность компонентов, сократив время внедрения новых фичей.",
-            "Добавил централизованное логирование ключевых операций, ускорив обнаружение причин сбоев и локализацию ошибок.",
-            "Автоматизировал регрессионное тестирование ключевых сценариев, снизив риски деградации стабильности после релизов.",
-            "Поддерживал production-окружение, оперативно устранял инциденты и внедрял оптимизации без простоев."
+            "Спроектировал архитектуру хранения данных на MySQL для сети серверов, что обеспечило стабильную работу системы под высокой нагрузкой и снизило риски простоев.",
+            "Реализовал кэширование сессионных данных в памяти процесса, что уменьшило нагрузку на базу данных и сократило задержки для пользователей в периоды пиковой активности.",
+            "Настроил синхронизацию между кэшем и базой, благодаря чему данные сохранялись корректно даже при сетевых сбоях, что снизило количество критичных инцидентов.",
+            "Упростил архитектуру серверных модулей и разделил ответственность компонентов, что ускорило внедрение нового функционала и снизило сложность поддержки системы.",
+            "Разработал библиотеку переиспользуемых компонентов, что сократило время разработки новых модулей и снизило затраты на сопровождение.",
+            "Добавил централизованное логирование ключевых операций, что сократило время поиска причин сбоев и ускорило восстановление сервиса.",
+            "Автоматизировал тестирование основных сценариев, что уменьшило количество ошибок после релизов и снизило риски нестабильности системы.",
+            "Поддерживал production-среду, оперативно устранял инциденты и внедрял улучшения, обеспечивая устойчивую работу системы без длительных простоев."
           ],
           en: [
-            "Architected MySQL data storage for a multi-server network, ensuring robust performance under heavy load and zero data loss.",
-            "Implemented in-memory process session caching, significantly cutting latency for active users during peak hours.",
-            "Set up persistent cache-to-database synchronization for network failover, eliminating critical data inconsistency issues.",
-            "Developed a reusable shared component library and decoupled core modules, dramatically accelerating feature rollout.",
-            "Integrated centralized logging of critical server events, streamlining root-cause diagnosis and system recovery.",
-            "Automated regression tests for core workflows, preventing regression issues across production releases.",
-            "Maintained production environments, troubleshooting high-priority issues and deploying zero-downtime performance patches."
+            "Architected MySQL data storage for a network of servers, ensuring stable high-load operations and minimizing downtime risks.",
+            "Implemented in-memory process session caching, reducing database load and cutting latency during peak usage hours.",
+            "Configured persistent synchronization between cache and database, preventing data loss during network failures and reducing critical incidents.",
+            "Simplified server module architecture and decoupled component responsibilities, accelerating feature rollouts and easing maintenance.",
+            "Built a reusable component library, cutting delivery time for new modules and lowering maintenance overhead.",
+            "Added centralized logging for key operations, speeding up root-cause diagnosis and service recovery.",
+            "Automated core test scenarios, reducing post-release regressions and system instability risks.",
+            "Maintained production environments, resolving incidents promptly and rolling out improvements with zero prolonged downtime."
           ]
         },
         stack: "Java, MySQL, Linux, Git, Command-based protocol (RCON)"
       }
     ]
   },
-
+  
   // 7. СЕКЦИЯ КОНТАКТОВ И СОТРУДНИЧЕСТВА
   footer: {
     ru: {
